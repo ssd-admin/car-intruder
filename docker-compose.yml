@@ -1,0 +1,20 @@
+version: '2'
+services:
+  db:
+    container_name: car-intruder-db
+    image: postgres:12-alpine
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    restart: always
+    env_file:
+      - ./.env.db
+    ports:
+      - 5430:5432
+  web:
+    image: car-intruder
+    depends_on:
+      - db
+    restart: always
+    ports:
+      - 3031:3000
+      
